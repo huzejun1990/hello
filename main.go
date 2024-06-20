@@ -1,10 +1,7 @@
 // package 定义包名 main 包名
 package main
 
-import (
-	"fmt"
-	"hello/model"
-)
+import "fmt"
 
 // func 定义函数	main 函数名
 
@@ -91,7 +88,25 @@ func main() {
 	//	fmt.Println(i)
 	//}
 	//fmt.Println(i)
-	fmt.Println(model.Pi)
+	//fmt.Println(model.Pi)
+
+	/*	var a int = 10
+		var p *int
+		p = &a
+		fmt.Println(*p)
+		*p = 20
+		fmt.Println(a)*/
+
+	var p *int
+	//var a int = 10
+	//p = &a
+	//new函数 初始化一个内存空间 申请了一个内存空间，自然就有地址
+	//放的什么值? 对应类型的零值
+	p = new(int)
+	*p = 20
+	fmt.Println(p)
+	//fmt.Println("p是指针，它是一个地址：", p)
+	//fmt.Println("取p指向内存空间的值：", *p)
 }
 
 /*func getValue() {
