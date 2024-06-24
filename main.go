@@ -1,8 +1,6 @@
 // package 定义包名 main 包名
 package main
 
-import "fmt"
-
 // func 定义函数	main 函数名
 
 // hello := "hello"
@@ -137,15 +135,92 @@ func main() {
 
 	//闭包
 
-	//创建一个玩家生成器
-	generator := playerGen("战神")
-	//返回玩家的名字和血量
-	name, hp := generator()
-	//打印值
-	fmt.Println(name, hp)
+	/*	//创建一个玩家生成器
+		generator := playerGen("战神")
+		//返回玩家的名字和血量
+		name, hp := generator()
+		//打印值
+		fmt.Println(name, hp)
+	*/
 
+	// 0,0,0
+	//var arr [3]int = [3]int{1, 2, 3}
+	//var arr = [...]int{1, 2, 3, 4, 5}
+	//var arr = [5]int{2: 3}
+	/*	var arr [3]int
+		arr[2] = 20
+		for _, value := range arr {
+			fmt.Println(value)
+		}
+
+		fmt.Println(arr, arr[2])*/
+
+	// 0,0,0
+	// 1,2,3
+	/*	var arr [3][3][3][3]int
+		fmt.Println(arr)*/
+
+	/*	var array [4]int
+		slice := array[1:3]
+		slice1 := slice[:]
+		fmt.Println(cap(slice))
+		fmt.Println(len(slice1))
+		change(slice)
+		fmt.Println(array)*/
+
+	/*	var slice []int = []int{0, 0, 0}
+		change(slice)
+		fmt.Println(slice)*/
+	// 长度 容量
+	/*	var s = make([]int, 0, 0)
+		s1 := *new([]int)
+		//s2 := &s
+		fmt.Println(s, s1)*/
+	/*	s1 := s[0:8]
+		fmt.Println(s1)
+		fmt.Printf("len:%d,cap:%d", len(s), cap(s))*/
+	/*	var numbers4 = [...]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		myslice := numbers4[4:6]
+		//打印出来长度为2
+		fmt.Printf("myslice为 %d, 其长度为：%d\n", myslice, len(myslice))
+		fmt.Println(cap(myslice))
+		myslice = myslice[:cap(myslice)]
+		//为什么 myslice 的长度为2，却能访问到第四个元素
+		fmt.Printf("myslice的第四个元素为：%d", myslice[3])*/
+
+	/*	slice1 := []int{1, 2, 3, 4, 5}
+		slice2 := []int{5, 4, 3}
+		copy(slice2, slice1) //只会复制slice1的前3个元素到slice2中
+		//copy(slice1, slice2) //只会复制slice2的3个元素到slice1的前3个位置
+		slice2[0] = 10
+		fmt.Println(slice1, slice2)*/
+
+	//slice1 := []int{1, 2, 3, 4, 5}
+	/*	slice1 := make([]int, 257, 257)
+		slice2 := append(slice1, 10)
+		fmt.Printf("cap:%d \n", cap(slice2))
+		fmt.Println(slice1, slice2)*/
+
+	//go1.17 版本新特性
+	/*	slice1 := make([]int, 2, 8)
+		arr := *(*[2]int)(slice1)
+		fmt.Println(arr)*/
+
+	//go1.20新特性
+	/*	slice1 := make([]int, 2, 8)
+		arr := [2]int(slice1)
+		fmt.Println(arr)*/
 }
 
+func change(s []int) {
+	s[0] = 10
+}
+
+/*func change(array *[4]int) {
+	array[0] = 10
+}*/
+
+/*
 func playerGen(name string) func() (string, int) {
 	//血量一直为150
 	hp := 150
@@ -154,7 +229,7 @@ func playerGen(name string) func() (string, int) {
 		//将变量引用到闭包中
 		return name, hp
 	}
-}
+}*/
 
 /*func yes() (int, int, string) {
 	var a int
