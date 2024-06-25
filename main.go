@@ -1,6 +1,8 @@
 // package 定义包名 main 包名
 package main
 
+import "fmt"
+
 // func 定义函数	main 函数名
 
 // hello := "hello"
@@ -210,11 +212,122 @@ func main() {
 	/*	slice1 := make([]int, 2, 8)
 		arr := [2]int(slice1)
 		fmt.Println(arr)*/
+
+	/*	var v int = 700
+		// v < 1000 这是条件表达式
+		if v > 1000 {
+			//为true 执行这条语句 false则不执行
+			fmt.Printf("v is less than 1000\n")
+		} else {
+			fmt.Printf("v is greater than 1000\n")
+		}
+		fmt.Printf("Value of v is : %d \n", v)*/
+	/*	step := 2
+		for step > 0 {
+			step--
+			fmt.Println(step)
+			//报错了，直接结束
+			panic("---")
+			//return
+			//break
+		}
+		//不会执行
+		fmt.Println("结束之后的语句.....")*/
+	/*	var a = 10
+			if a < 7 {
+				goto gotoHere
+			}
+			return
+			//goto gotoHere
+		gotoHere:
+			fmt.Println("tag")
+			fmt.Println("tag1")
+			fmt.Println("tag2")*/
+
+	/*	for x := 0; x < 10; x++ {
+				if x == 2 {
+					//跳转到标签
+					goto breakHere
+				}
+			}
+			//手动返回避免执行进入标签
+			return
+			//标签
+		breakHere:
+			fmt.Println("done")*/
+
+	/*	var slice []int = []int{1, 2, 3, 4, 5}
+		for index, value := range slice {
+			go func() {
+				//1.22版本这里会输出 1,2,3,4,5 顺序不一定
+				//1.22版本以前 大概率会输出5
+				//这里原因是1.22版本每次循环 index,value会创建新的变量，而不是共享变量了
+				fmt.Printf("index:%d,value:%d \n", index, value)
+			}()
+		}
+		for {
+
+		}*/
+
+	/*	for i := range 11 {
+		fmt.Println(i)
+	}*/
+
+	/* 定义局部变量	*/
+	/*	var grade string = "B"
+		var score int = 90
+
+		switch score {
+		case 90:
+			grade = "A"
+		case 80:
+			grade = "B"
+		case 50, 60, 70:
+			grade = "C"
+		default:
+			grade = "D"
+		}
+		//switch后面如果没有条件表达式，则会对true进行匹配
+		switch {
+		case grade == "A":
+			fmt.Printf("优秀!\n")
+		case grade == "B", grade == "C":
+			fmt.Printf("良好\n")
+		case grade == "D":
+			fmt.Println("及格\n")
+		case grade == "F":
+			fmt.Printf("不及格\n")
+		default:
+			fmt.Printf("差\n")
+		}
+		fmt.Printf("你的等级是 %s\n", grade)*/
+
+	/*	var s = "hello"
+		switch {
+		case s == "hello":
+			fmt.Println("hello")
+			fallthrough
+		case s == "world":
+			fmt.Println("world")
+
+		}*/
+
+OuterLoop:
+	for i := 0; i < 2; i++ {
+		for j := 0; j < 5; j++ {
+			switch j {
+			case 2:
+				fmt.Println(i, j)
+				continue OuterLoop
+
+			}
+		}
+	}
 }
 
-func change(s []int) {
+/*func change(s []int) {
 	s[0] = 10
-}
+}*/
 
 /*func change(array *[4]int) {
 	array[0] = 10
