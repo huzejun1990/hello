@@ -1,7 +1,11 @@
 // package 定义包名 main 包名
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
 /*func Min(x, y int) int {
 	if x < y {
@@ -580,7 +584,7 @@ func swap(x int, arr ...float64) {
 	Name() T
 }*/
 
-type myInt int
+/*type myInt int
 
 type AllBaseType interface {
 	~int | float64 | float32 | int64
@@ -600,4 +604,160 @@ func main() {
 	//var x float64 = 1.2
 	//var y float64 = 2.3
 	//fmt.Println(Min(x, y))
+}*/
+
+// 12-并发
+
+/*var x int = 1
+
+// 任务编排
+var w sync.WaitGroup
+*/
+/*
+func main() {
+	start := time.Now().UnixMilli()
+	w.Add(2)
+	go task1()
+	go task2()
+	w.Wait()
+	end := time.Now().UnixMilli() - start
+	fmt.Printf("总共用时：%d \n", end)
+
+}
+
+// func task2(w *sync.WaitGroup) {
+func task2() {
+	time.Sleep(time.Second * 5)
+	fmt.Println("task2执行")
+	w.Done()
+}
+
+// func task1(w *sync.WaitGroup) {
+func task1() {
+	time.Sleep(time.Second * 3)
+	fmt.Println("task1执行")
+	w.Done()
+}*/
+
+/*func hello(i int) {
+	fmt.Println("Hello Goroutine!", i)
+	fmt.Println(x + 1)
+}
+
+func main() {
+	for i := 0; i < 10; i++ {
+		go hello(i)
+	}
+	fmt.Println("main goroutine done!")
+	time.Sleep(time.Second * 2)
+}
+*/
+
+/*func main() {
+
+	//无缓冲  1有缓冲了 队列有长度 1
+	//	var ch = make(chan int, 1)
+	//	// 发送
+	//	ch <- 10
+	//	// 接收
+	//	x := <-ch
+	//	fmt.Println(x)
+	//	close(ch)
+	//	x = <-ch
+
+	var ch = make(chan int)
+	go recv(ch)
+	//发送
+	ch <- 10
+}
+
+func recv(ch chan int) {
+	//接收
+	x := <-ch
+	fmt.Println(x)
+}*/
+
+/*func main() {
+	ch := make(chan int)
+	go func() {
+		time.Sleep(3 * time.Second)
+		ch <- 1
+	}()
+
+	select {
+	case data, ok := <-ch:
+		if ok {
+			fmt.Println("接收到数据: ", data)
+		} else {
+			fmt.Println("能并已被关闭")
+		}
+	case <-time.After(2 * time.Second):
+		fmt.Println("超时了！")
+	}
+}*/
+/*
+var x int64
+var wg sync.WaitGroup
+var lock sync.Mutex
+
+func add() {
+	for i := 0; i < 5000; i++ {
+		lock.Lock()
+		x = x + 1
+		lock.Unlock()
+	}
+	wg.Done()
+}
+
+func main() {
+	wg.Add(2)
+	go add()
+	go add()
+	wg.Wait()
+	fmt.Println(x)
+}
+*/
+
+// map 100
+var (
+	x      int64
+	wg     sync.WaitGroup
+	lock   sync.Mutex
+	rwlock sync.RWMutex
+)
+
+func write() {
+	lock.Lock() //加互斥锁
+	//rwlock.Lock() // 加写锁
+	x = x + 1
+	time.Sleep(10 * time.Millisecond) //假设读操作耗时10毫秒
+	//rwlock.Unlock()                   //解写锁
+	lock.Unlock() // 解互斥锁
+	wg.Done()
+}
+
+func read() {
+	lock.Lock() //加互斥锁
+	//rwlock.RLock()               //加读锁
+	time.Sleep(time.Millisecond) //假设读操作耗时1毫秒
+	//rwlock.RUnlock()             //解读锁
+	lock.Unlock() //解互斥锁
+	wg.Done()
+}
+
+func main() {
+	start := time.Now()
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go write()
+	}
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go read()
+	}
+
+	wg.Wait()
+	end := time.Now()
+	fmt.Println(end.Sub(start))
 }
