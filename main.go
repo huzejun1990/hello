@@ -2,9 +2,8 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"sync"
-	"time"
 )
 
 /*func Min(x, y int) int {
@@ -717,7 +716,7 @@ func main() {
 	fmt.Println(x)
 }
 */
-
+/*
 // map 100
 var (
 	x      int64
@@ -760,4 +759,129 @@ func main() {
 	wg.Wait()
 	end := time.Now()
 	fmt.Println(end.Sub(start))
+}
+*/
+
+/*func main() {
+	//str := model.Get()
+	//fmt.Println(str)
+	//Println(str)
+}
+*/
+// 13-包
+
+/*func main() {
+	g := gin.Default()
+	g.Run(":8080")
+}
+*/
+
+//14-错误
+
+type User struct {
+	Name string
+}
+
+func gen() (*User, error) {
+	//假设出了一些问题 导致返回nil指针
+	return nil, errors.New("user error value is nil")
+}
+
+// var MoneyNotEnough = errors.New("余额不足！")
+var MoneyNotEnough = &MyError{Msg: "余额不足"}
+
+func pay(money float64) error {
+	if money < 10 {
+		return MoneyNotEnough
+		//return errors.New("余额不足")
+	}
+	//支付成功
+	return nil
+}
+
+type MyError struct {
+	Msg string
+}
+
+func (e *MyError) Error() string {
+	return e.Msg
+}
+
+/*func main() {
+	err := pay(5)
+	var myError *MyError
+	errors.As(err, &myError)
+	fmt.Println(myError.Msg)
+
+	//err := pay(15)
+	//if errors.Is(err, MoneyNotEnough) {
+	//	fmt.Println("错误是余额不足")
+	//} else {
+	//	fmt.Println("不是余额不足")
+	//}
+
+	//user, err := gen()
+	//if errors.Is(err, MoneyNotEnough) {
+	//	fmt.Println("错误是余额不足")
+	//} else {
+	//	fmt.Println("不是余额不足")
+	//}
+	//if err != nil {
+	//	//预料到有这个错误 进行对应的处理
+	//	fmt.Println(err)
+	//} else {
+	//	fmt.Println(user.Name)
+	//}
+}*/
+
+/*func main() {
+	originalErr := errors.New("原始错误")
+	//%w 嵌套生成一个新的错误
+	newError := fmt.Errorf("error: %w", originalErr)
+	fmt.Println(newError.Error())
+	if errors.Is(newError, originalErr) {
+		fmt.Println("这两个错误相等")
+	}
+	//用于将一个错误对象展开，得到下一层错误对象
+	originalErr1 := errors.Unwrap(newError)
+	if errors.Is(originalErr, originalErr1) {
+		fmt.Println("这两个错误相等")
+	}
+
+}*/
+
+/*func main() {
+	err1 := errors.New("err1")
+	err2 := errors.New("err2")
+	err := errors.Join(err1, err2)
+	if errors.Is(err, err1) {
+		fmt.Println("err is err1")
+	}
+	if errors.Is(err, err2) {
+		fmt.Println("err is err2")
+	}
+}
+*/
+
+/*func main() {
+	user, _ := gen()
+	user.Name = ""
+}*/
+
+func main() {
+	func() {
+		err := pay(5)
+		//延迟操作 这个操作会在return结束前运行
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println("捕获的错误：", err)
+			}
+		}()
+		//想要捕获panic
+		if err != nil {
+			panic(err)
+		}
+	}()
+
+	fmt.Println("下面还有程序，即使上主的程序发生panic,我们想要执行")
 }
