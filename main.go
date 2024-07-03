@@ -1,11 +1,10 @@
 // package 定义包名 main 包名
-package main
+/*package main
 
 import (
 	"errors"
-	"fmt"
 )
-
+*/
 /*func Min(x, y int) int {
 	if x < y {
 		return x
@@ -777,7 +776,7 @@ func main() {
 */
 
 //14-错误
-
+/*
 type User struct {
 	Name string
 }
@@ -805,7 +804,7 @@ type MyError struct {
 
 func (e *MyError) Error() string {
 	return e.Msg
-}
+}*/
 
 /*func main() {
 	err := pay(5)
@@ -868,7 +867,7 @@ func (e *MyError) Error() string {
 	user.Name = ""
 }*/
 
-func main() {
+/*func main() {
 	func() {
 		err := pay(5)
 		//延迟操作 这个操作会在return结束前运行
@@ -884,4 +883,99 @@ func main() {
 	}()
 
 	fmt.Println("下面还有程序，即使上主的程序发生panic,我们想要执行")
+}
+*/
+
+//package main
+
+// defer
+/*func main() {
+	x := 10
+	//defer func(a int) {
+	//	fmt.Println("我后执行:", a)
+	//}(x)
+	//defer fmt.Println(x)
+	defer fmt.Println("1")
+	defer fmt.Println("2")
+	defer fmt.Println("3")
+	x++
+	fmt.Println("我先执行:", x)
+}*/
+/*
+var a func()
+
+func main() {
+	//result := testDefer()
+	//fmt.Println(result)
+
+	//x := deferTest()
+	//fmt.Println(*x)
+
+	defer func() {
+		fmt.Println("defer")
+	}()
+	//退出进程
+	os.Exit(-1)
+	return
+}
+
+func deferTest() *int {
+	i := 1
+	defer func(x *int) {
+		*x++
+	}(&i)
+	return &i
+}
+
+func testDefer() (result int) {
+	i := 1
+	//defer func() {
+	//	result++
+	//}()
+	defer a()
+	return i
+
+}
+*/
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+var a func()
+
+// time
+/*func main() {
+	t := time.Now()
+	fmt.Println(t)
+	fmt.Println(t.Format("yyyy-MM-dd"))
+	fmt.Println(t.Format("2006-01-02 15:04:05")) //612345
+	fmt.Println(t.Format("2006年01月02日 15:04:05"))
+	fmt.Println("-----------------")
+	//milli := t.UnixMilli()
+	//s := t.Unix()
+	//fmt.Printf("秒:%d, 毫秒:%d\n", s, milli)
+	after20s := t.Add(20 * time.Second)
+	fmt.Println(after20s.Format("2006年01月02日 15:04:05"))
+	sub := after20s.Sub(t)
+	fmt.Printf("差值：%v", sub)
+}*/
+
+func main() {
+	ch := make(chan struct{})
+	go wait(ch)
+	select {
+	case <-ch:
+		fmt.Println("任务完成")
+	case <-time.After(2 * time.Second):
+		fmt.Println("超时了")
+	}
+}
+
+func wait(ch chan struct{}) {
+	time.Sleep(1 * time.Second)
+	ch <- struct{}{}
 }
