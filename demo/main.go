@@ -1,5 +1,5 @@
-// @Author huzejun 2024/7/3 22:09:00
-package main
+//@Author huzejun 2024/7/3 22:09:00
+/*package main
 
 import (
 	"fmt"
@@ -20,16 +20,16 @@ func wr() {
 		fmt.Println(err)
 		return
 	}
-}
+}*/
 
-func re() {
+/*func re() {
 	content, err := ioutil.ReadFile("./yyy.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	fmt.Println(string(content))
-}
+}*/
 
 /*func writeFile(context string) {
 	file, err := os.Open("./test.txt")
@@ -73,3 +73,45 @@ func writeFile(context string) {
 	}
 }
 */
+
+package main
+
+import (
+	"bufio"
+	"log"
+	"net"
+)
+
+func main() {
+	//1.监听端口 IP地址 你的电脑会有很多程序 需要一份上端口来标识某一个程序
+	// 127.0.0.1 本地环回地址	本机IP
+	listen, err := net.Listen("tcp", "127.0.0.1:20000")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for {
+		//接收请求 阻塞等待 建立连接
+		conn, err := listen.Accept()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		go process(conn)
+	}
+}
+
+func process(conn net.Conn) {
+	defer conn.Close()
+	for {
+		reader := bufio.NewReader(conn)
+		var buf [512]byte
+		n, err := reader.Read(buf[:])
+		if err != nil {
+			log.Println(err)
+			break
+		}
+		v := string(buf[:n])
+		log.Printf("接收到客户端的信息：%s \n", v)
+		conn.Write(buf[:n])
+	}
+}
