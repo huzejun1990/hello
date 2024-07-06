@@ -1,5 +1,5 @@
 // @Author huzejun 2024/7/6 19:05:00
-package main
+/*package main
 
 import (
 	"log"
@@ -28,4 +28,33 @@ func login(w http.ResponseWriter, r *http.Request) {
 func myHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("url:%s,method:%d,header:%v \n", r.URL.Path, r.Method, r.Header)
 	w.Write([]byte("学习之路 go教程"))
+}*/
+
+package main
+
+import (
+	"log"
+	"net/http"
+	"time"
+)
+
+func main() {
+	http.HandleFunc("/users", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(2 * time.Second)
+		w.Write([]byte("/users"))
+	})
+
+	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(3 * time.Second)
+		w.Write([]byte("/products"))
+	})
+
+	http.HandleFunc("/orders", func(w http.ResponseWriter, r *http.Request) {
+		//time.Sleep(5 * time.Second)
+		w.Write([]byte("/orders"))
+	})
+	err := http.ListenAndServe(":80", nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }

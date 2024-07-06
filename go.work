@@ -6,4 +6,5 @@ use (
 	./udpServer
 	./udpClient
 	./httpServer
+	./contextLearn
 )
