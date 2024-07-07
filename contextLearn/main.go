@@ -1,5 +1,5 @@
 // @Author huzejun 2024/7/6 21:17:00
-package main
+/*package main
 
 import (
 	"context"
@@ -21,6 +21,7 @@ func main() {
 	for _, url := range urls {
 		//3个协程 共用5秒的超时
 		//go fetchAPI(ctx, url, results)
+		//ctx := context.WithValue(ctx, "url", url)
 		fetchAPI(ctx, url, results)
 	}
 	for range urls {
@@ -43,4 +44,35 @@ func fetchAPI(ctx context.Context, url string, results chan string) {
 	}
 	defer response.Body.Close()
 	results <- fmt.Sprintf("fetch api success:%s,status=%d", url, response.StatusCode)
+}
+*/
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+)
+
+func main() {
+	ctx := context.WithValue(context.Background(), "userId", 123)
+	go performTask(ctx)
+	ctx = context.WithValue(ctx, "userId1", 456)
+	go performTask1(ctx)
+	time.Sleep(time.Second)
+}
+
+func performTask(ctx context.Context) {
+	value := ctx.Value("userId")
+	fmt.Println("userId:", value)
+	value1 := ctx.Value("userId1")
+	fmt.Println("userId1:", value1)
+}
+
+func performTask1(ctx context.Context) {
+	value := ctx.Value("userId")
+	fmt.Println("performTask1 userId:", value)
+	value1 := ctx.Value("userId1")
+	fmt.Println("performTask1 userId1:", value1)
 }
