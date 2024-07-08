@@ -29,3 +29,8 @@ func newSliceWithCap(n int) []int {
 	}
 	return nums
 }
+
+func Div(a, b int) int {
+	//如果测试的数据b忽略了0，那么就会埋下隐患
+	return a / b
+}

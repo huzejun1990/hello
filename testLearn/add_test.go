@@ -3,6 +3,7 @@
 
 import "testing"
 
+// 单元测试（*testing.T）
 func Test_reduce(t *testing.T) {
 
 }
@@ -65,6 +66,7 @@ package main
 
 import "testing"
 
+//基准测试（*testing.B）
 //func BenchmarkSprintf(b *testing.B) {
 //	num := 10
 //	//重置计时器，确保从一个一致的状态开始
@@ -85,14 +87,22 @@ import "testing"
 //	}
 //}
 
-func BenchmarkNewSlice(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		newSlice(1000000)
-	}
-}
+//func BenchmarkNewSlice(b *testing.B) {
+//	for n := 0; n < b.N; n++ {
+//		newSlice(1000000)
+//	}
+//}
+//
+//func BenchmarkNewSliceWithCap(b *testing.B) {
+//	for n := 0; n < b.N; n++ {
+//		newSliceWithCap(1000000)
+//	}
+//}
 
-func BenchmarkNewSliceWithCap(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		newSliceWithCap(1000000)
-	}
+// 模糊测试 (*testing.F)
+func FuzzDiv(f *testing.F) {
+	//f.Add() //添加测试数据
+	f.Fuzz(func(t *testing.T, a, b int) {
+		Div(a, b)
+	})
 }
